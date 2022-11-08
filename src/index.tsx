@@ -27,6 +27,8 @@ const App = () => {
       return;
     }
 
+    iframe.current.srcdoc = html;
+
     // Here, we're bundling
     // Important, we do not have a file system available in the browser
     const result = await esbuildRef.current.build({
@@ -41,8 +43,7 @@ const App = () => {
     });
     // setCode(result.outputFiles[0].text);
 
-    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*')
-
+    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
   };
 
   const html = `
@@ -52,13 +53,18 @@ const App = () => {
       <div id="root"></div>
       <script>
       window.addEventListener('message', (event) => {
-        eval(event.data);
+        try { 
+          eval(event.data);
+        } catch(err) {  // does not catch asyncronous errors
+          const root = document.querySelector('#root');
+          root.innerHTML = '<div style="color: red;"><h4> Runtime Error</h4>' + err + '</div>';
+          console.error(err);
+        }
       }, false);
       </script>
     </body>
     </html>
   `;
-
 
   return (
     <div>
@@ -70,10 +76,14 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
       <pre>{code}</pre>
-      <iframe ref={iframe} srcDoc={html} sandbox="allow-scripts" title='IFrame' />
+      <iframe
+        ref={iframe}
+        srcDoc={html}
+        sandbox='allow-scripts'
+        title='code-preview'
+      />
     </div>
   );
 };
-
 
 ReactDom.render(<App />, document.querySelector('#root'));
