@@ -18,7 +18,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
 
   const handleOnChange: OnChange = (value: any, event) => {
     onChange(value);
-    console.log(event);
   };
 
   const onFormatClick = () => {

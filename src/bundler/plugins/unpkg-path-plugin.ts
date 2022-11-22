@@ -1,5 +1,4 @@
 import * as esbuild from 'esbuild-wasm';
-import { fetchPlugin } from './fetch-plugin';
 
 export const unpkgPathPlugin = () => {
   return {
