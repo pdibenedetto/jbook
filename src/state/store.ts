@@ -21,7 +21,19 @@ store.dispatch({
   },
 });
 
-const id = store.getState().cells?.order[0];
+store.dispatch({
+  type: ActionType.INSERT_CELL_BEFORE,
+  payload: {
+    id: null,
+    type: 'code',
+  },
+});
 
-console.log(id);
-console.log(store.getState());
+store.dispatch({
+  type: ActionType.INSERT_CELL_BEFORE,
+  payload: {
+    id: null,
+    type: 'text',
+  },
+});
+
