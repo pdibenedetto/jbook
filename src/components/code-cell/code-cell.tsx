@@ -12,7 +12,6 @@ interface CodeCellProps {
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const [code, setCode] = useState('');
   const [err, setErr] = useState('');
-
   const { updateCell } = useActions();
 
   useEffect(() => {
@@ -29,7 +28,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
   return (
     <Resizable direction='vertical'>
-      <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
+      <div style={{ height: 'calc(100% - 10px)', display: 'flex', flexDirection: 'row' }}>
         <Resizable direction='horizontal'>
           <CodeEditor
             initialValue={cell.content}
