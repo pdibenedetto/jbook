@@ -72,8 +72,6 @@ const reducer = produce(
   initialState
 );
 
-const findIndex = () => {};
-
 const randomId = () => {
   return Math.random().toString(36).substring(2, 5);
 };
